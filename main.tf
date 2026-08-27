@@ -1,5 +1,5 @@
 module "network" {
-  source = "../az-tf-child-dev"
+  source = "git::https://github.com/gauravdubey5/az-tf-child-dev.git?ref=v1.0.0"
 
   resource_group_name = var.resource_group_name
   location            = var.location
