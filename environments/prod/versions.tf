@@ -1,6 +1,6 @@
 terraform {
 
-  required_version = "~> 1.9"
+  required_version = "~> 3.9"
 
   required_providers {
 
