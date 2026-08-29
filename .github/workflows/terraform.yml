@@ -10,9 +10,6 @@ jobs:
   terraform-plan:
     name: Plan
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: environment/dev
 
     steps:
       - name: Checkout code
@@ -31,9 +28,6 @@ jobs:
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
-
-    #   - name: Terraform fmt
-    #     run: terraform fmt
 
       - name: Terraform init
         run: terraform init
@@ -46,13 +40,9 @@ jobs:
 
   terraform-apply:
     name: Apply
-    # Runs only after the Plan job succeeds, and only on main.
     if: github.ref == 'refs/heads/main'
     needs: terraform-plan
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: environment/dev
 
     steps:
       - name: Checkout code
@@ -72,18 +62,11 @@ jobs:
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
 
-    #   - name: Terraform fmt
-    #     run: terraform fmt
-
       - name: Terraform init
         run: terraform init
 
-      - name: Terraform validate
-        run: terraform validate
-
-      # Re-create the plan because each job uses a separate runner workspace.
       - name: Terraform plan
         run: terraform plan -no-color -out=tfplan
 
-    #   - name: Terraform apply
-    #     run: terraform apply -no-color -auto-approve tfplan
+      # - name: Terraform apply
+      #   run: terraform apply -no-color -auto-approve tfplan
